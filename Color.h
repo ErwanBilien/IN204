@@ -2,26 +2,29 @@
 #define _Color_H
 
 class Color {
+private:
+    
     double red, green, blue;
     
 public:
-    Color ();
     
-    Color(double, double, double);
+    Color () : red(0.5), green(0.5), blue(0.5) {} // default color is grey
     
-    double getColorR(double redValue) {return red};
-    double getColorG(double greenValue) {return green};
-    double getColorB(double rblueValue) {return blue};
+    Color(double r, double g, double b) : red(r), green(b), blue(b) {}
     
-    double setColorR(double redValue) {red = redValue};
-    double setColorG(double greenValue) {green = greenValue};
-    double setColorB(double rblueValue) {blue = blueValue};
+    double getColorR() {return red;};
+    double getColorG() {return green;};
+    double getColorB() {return blue;};
+    
+    void setColorR(double redValue) {red = redValue;};
+    void setColorG(double greenValue) {green = greenValue;};
+    void setColorB(double blueValue) {blue = blueValue;};
     
     Color check() {
         // ensures color values are correct
         double lightSum = red + green + blue;
         double lightExcess = lightSum - 3;
-        if (excesslight > 0) {
+        if (lightExcess > 0) {
             red += lightExcess*(red/lightSum);
             green += lightExcess*(green/lightSum);
             blue += lightExcess*(blue/lightSum);
@@ -35,18 +38,5 @@ public:
 
         return Color (red, green, blue);
     }
-}
-
-//Grey as default color
-Color::Color () {
-    red = 0.5;
-    green = 0.5;
-    blue = 0.5;
-}
-
-Color::Color (double r, double g, double b) {
-    red = r;
-    green = g;
-    blue = b;
-}
+};
 #endif
