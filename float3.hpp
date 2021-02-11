@@ -2,6 +2,7 @@
 #define _FLOAT3_H
 #include<math.h>
 #include <assert.h>
+#include<iostream>
 
 class float3 {
 protected:
@@ -39,6 +40,7 @@ public:
 	friend double distance(const float3, const float3);
 	friend float3 cross(const float3, const float3);
 	friend double dot(const float3, const float3);
+	friend std::ostream &operator <<(std::ostream&,float3 );
 
 	float3 operator+(const float3 anotherVect) const {
 		return float3(x + anotherVect.x, y + anotherVect.y, z + anotherVect.z);
@@ -70,7 +72,13 @@ public:
 	bool operator !=(const float3 anotherVect) {
 		return (x != anotherVect.x) || (y != anotherVect.y) || (z != anotherVect.z);
 	}
+
 };
+inline std::ostream& operator <<(std::ostream &flux,float3 aVect){
+	flux<<"x="<<aVect.x<<"y="<<aVect.y<<"z="<<aVect.z;
+	return flux;
+}
+
 inline float3 operator* (double aValue, const float3 aVect) {
 	return float3(aValue * aVect.x, aValue * aVect.y, aValue * aVect.z);
 }

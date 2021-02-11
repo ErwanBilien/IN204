@@ -12,6 +12,7 @@ public:
 
     Color(double r, double g, double b) : red(r), green(g), blue(b) {}
 
+
     double getColorR() { return red; };
     double getColorG() { return green; };
     double getColorB() { return blue; };
@@ -38,8 +39,10 @@ public:
 
         return Color(red, green, blue);
     }
-    Color operator=(Color anotherColor) const {
-        return Color(anotherColor.getColorR(),anotherColor.getColorG(),anotherColor.getColorB());
+    void operator=(Color anotherColor)  {
+        red=anotherColor.getColorR();
+        green=anotherColor.getColorG();
+        blue=anotherColor.getColorB();
     }
     Color operator+(Color anotherColor) const {
         return Color(red + anotherColor.getColorR(), green + anotherColor.getColorG(), blue + anotherColor.getColorB());
