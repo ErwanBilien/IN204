@@ -1,0 +1,12 @@
+<Root>
+	<Sphere Rayon_S="1" xCentre="0" yCentre="-1" zCentre="3" redColor="1" greenColor="0" blueColor="0" brightness="500" reflection="0.2"/>
+
+	<Objects>
+		<Spheres sphereCount="4">
+			<Sphere Rayon_S="1" xCentre="0" yCentre="-1" zCentre="3" redColor="1" greenColor="0" blueColor="0" brightness="500" reflection="0.2"/>
+			<Sphere Rayon_S="1" xCentre="2" yCentre="0" zCentre="4" redColor="1" greenColor="0" blueColor="0" brightness="500" reflection="0.3"/>
+			<Sphere Rayon_S="1" xCentre="-2" yCentre="0" zCentre="4" redColor="0" greenColor="1" blueColor="0" brightness="10" reflection="0.4"/>
+			<Sphere Rayon_S="5000" xCentre="0" yCentre="-5001" zCentre="0" redColor="1" greenColor="1" blueColor="0" brightness="1000" reflection="0.5"/>
+		</Spheres>
+	</Objects>
+</Root>
