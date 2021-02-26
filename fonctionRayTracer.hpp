@@ -1,8 +1,5 @@
 #ifndef RAYTRACER
 #define RAYTRACER
-#include "float3.hpp"
-#include "color.hpp"
-#include "objet.hpp"
 #include "Lumiere.hpp"
 
 
@@ -16,23 +13,26 @@ Color rayTracer(std::vector<Objet*> listeObjets,std::vector<Lumiere*>listeLumier
         float3 vectDir=myRay.getDir();
         float3 PointIntersect=myRay.getOrigin()+dPlusProche*vectDir;
         float3 normale=listeObjets[indexPlusProche]->getNormal(PointIntersect);
+        double intensiteRayon=myRay.getI();
+
         if (dot(normale,-vectDir)<0)normale=-normale;
+
         Color couleurLocale= listeObjets[indexPlusProche]->getColor()*CalculLuminosite(listeObjets,listeLumiere,PointIntersect,
             normale,-vectDir,listeObjets[indexPlusProche]->getShine()); //couleur avant la reflection
         
         double reflechissance=listeObjets[indexPlusProche]->getReflechissance();
         double transparence=listeObjets[indexPlusProche]->getTransparence();
-        if (profondeurMax==0||(reflechissance<=0&&transparence<=0)){
+        if (intensiteRayon<=0.1||profondeurMax==0||(reflechissance<=0&&transparence<=0)){
             return couleurLocale;
         }
         else{
             Color couleurReflechie=Color();
-            if(reflechissance>0){
-                Rayon rayonReflechi(PointIntersect,2 * normale * dot(normale,-vectDir) + vectDir,myRay.getIndex());
+            if(reflechissance>0.000001){
+                Rayon rayonReflechi(PointIntersect,2 * normale * dot(normale,-vectDir) + vectDir,myRay.getIndex(),reflechissance*intensiteRayon);
                 couleurReflechie=rayTracer(listeObjets,listeLumiere,rayonReflechi,profondeurMax-1);
             }
             Color couleurRefractee=Color();
-            if(transparence>0){
+            if(transparence>0.000001){
                 //indices refraction
                 double n1,n2;
                 int prochainIndex;
@@ -50,13 +50,11 @@ Color rayTracer(std::vector<Objet*> listeObjets,std::vector<Lumiere*>listeLumier
 
                 double n=n1/n2;//indice du milieu ambiant/indice du mileu suivant
                 vectDir=vectDir.normalize();
-                //std::cout<<n<< " ";
                 double cosThetaI=dot(normale,-vectDir);
                 double sinThetaR2=n*n*(1.0-cosThetaI*cosThetaI );
                 if (sinThetaR2<=1.0){
                     double cosThetaR=sqrt(1.0-sinThetaR2);
-                    Rayon rayonRefracte(PointIntersect,n*vectDir+(n*cosThetaI-cosThetaR)*normale,prochainIndex);
-                    //std::cout<<vectDir-n*vectDir+(n*cosThetaI-cosThetaR)*normale<<std::endl;
+                    Rayon rayonRefracte(PointIntersect,n*vectDir+(n*cosThetaI-cosThetaR)*normale,prochainIndex,transparence*intensiteRayon);
                     couleurRefractee=rayTracer(listeObjets,listeLumiere,rayonRefracte,profondeurMax-1);
                 }
                 else couleurRefractee=Color();

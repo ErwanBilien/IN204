@@ -31,7 +31,7 @@ public:
 		return pow(x, 2) + pow(y, 2) + pow(z, 2);
 	}
 	float3 normalize() {
-		double norm = this->length();
+		double norm = (double)this->length();
 		assert(norm != 0);
 		return float3(x / norm, y / norm, z / norm);
 	}
