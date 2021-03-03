@@ -6,14 +6,10 @@ protected:
 	float3 sommet1;//sommets du triangle
 	float3 sommet2;
 	float3 sommet3;
-	float3 Normale;
 public:
-	Triangle(float3 s1,float3 s2,float3 s3):sommet1(s1),sommet2(s2),sommet3(s3),Normale(cross(sommet2-sommet1,sommet3-sommet1).normalize()){
-		if(cross(sommet2-sommet1,sommet3-sommet1).length()<0.0001)std::cout<<" A "<<sommet1<<" B "<< sommet2<<" C "<<sommet3<<std::endl<<std::flush;
-
-	}
+	Triangle(float3 s1,float3 s2,float3 s3):sommet1(s1),sommet2(s2),sommet3(s3){}
 	float3 getNormal(){
-		return Normale;
+		return cross(sommet2-sommet1,sommet3-sommet1).normalize();
     }
 	double IntersectionTriangle(Rayon myRay){
 		//*****//algorithme de Moller-Trumbore (source wikipedia)//******//
@@ -23,7 +19,7 @@ public:
 		float3 arrete2=sommet3-sommet1;
 		float3 h=cross(vectDir,arrete2);
 		double a=dot(arrete1,h);
-		if(abs(a)<0.0001)return -1;//rayon parallele au triangle
+		if(a<0.000001&&a>-0.000001)return -1;//rayon parallele au triangle
 		double f=1.0/a;
 		float3 s=origine-sommet1;
 		double u=f*dot(s,h);
@@ -32,7 +28,7 @@ public:
 		double v=f*dot(vectDir,q);
 		if(v<0.0||u+v>1.0)return-1;
 		double t=f*dot(arrete2,q);
-		if (t>0.0001)return t;
+		if (t>0.000001)return t;
 		return -1;
 		//******//
 	}
@@ -53,7 +49,7 @@ public:
     	double d;
     	for (int i = 0; i < (int)listeTriangle.size(); i++) {	
         	d = listeTriangle[i].IntersectionTriangle(myRay);
-        	if (d > 0 && (indexPlusProche == -1 || d < dPlusProche)) {
+        	if (d > 0.0 && (indexPlusProche == -1 || d < dPlusProche)) {
            	 	indexPlusProche = i;
             	dPlusProche = d;
         	}
@@ -61,6 +57,7 @@ public:
     	
     	if(indexPlusProche==-1)return -1;
     	normale=listeTriangle[indexPlusProche].getNormal();
+
     	
     	return dPlusProche;
 	}

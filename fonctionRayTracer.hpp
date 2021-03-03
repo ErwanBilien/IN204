@@ -13,26 +13,28 @@ Color rayTracer(std::vector<Objet*> listeObjets,std::vector<Lumiere*>listeLumier
         float3 vectDir=myRay.getDir();
         float3 PointIntersect=myRay.getOrigin()+dPlusProche*vectDir;
         float3 normale=listeObjets[indexPlusProche]->getNormal(PointIntersect);
-        double intensiteRayon=myRay.getI();
-
-        if (dot(normale,-vectDir)<0)normale=-normale;
-
+        double intensiteRayon=myRay.getI();        
+        if (dot(normale,-vectDir.normalize())<0.00001)normale=-normale;
         Color couleurLocale= listeObjets[indexPlusProche]->getColor()*CalculLuminosite(listeObjets,listeLumiere,PointIntersect,
             normale,-vectDir,listeObjets[indexPlusProche]->getShine()); //couleur avant la reflection
         
         double reflechissance=listeObjets[indexPlusProche]->getReflechissance();
         double transparence=listeObjets[indexPlusProche]->getTransparence();
-        if (intensiteRayon<=0.1||profondeurMax==0||(reflechissance<=0&&transparence<=0)){
+        if (intensiteRayon<=0.01||profondeurMax==0||(reflechissance<=0&&transparence<=0)){
             return couleurLocale;
         }
         else{
             Color couleurReflechie=Color();
-            if(reflechissance>0.000001){
-                Rayon rayonReflechi(PointIntersect,2 * normale * dot(normale,-vectDir) + vectDir,myRay.getIndex(),reflechissance*intensiteRayon);
-                couleurReflechie=rayTracer(listeObjets,listeLumiere,rayonReflechi,profondeurMax-1);
+            if(reflechissance>0.0){
+                float3 reflecDir=2 * normale * dot(normale,-vectDir) + vectDir;
+                //if(dot(reflecDir,normale)<-0.0000001){
+                    Rayon rayonReflechi(PointIntersect,reflecDir,myRay.getIndex(),reflechissance*intensiteRayon);
+                    couleurReflechie=rayTracer(listeObjets,listeLumiere,rayonReflechi,profondeurMax-1);
+                //}
+
             }
             Color couleurRefractee=Color();
-            if(transparence>0.000001){
+            if(transparence>0.0){
                 //indices refraction
                 double n1,n2;
                 int prochainIndex;

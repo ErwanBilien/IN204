@@ -25,15 +25,15 @@ public:
 		return z;
 	}
 	double length() {
-		return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
+		return sqrt(x*x + y*y + z*z);
 	}
 	double length_squared() {
 		return pow(x, 2) + pow(y, 2) + pow(z, 2);
 	}
 	float3 normalize() {
-		double norm = (double)this->length();
+		double norm = this->length();
 		assert(norm != 0);
-		return float3(x / norm, y / norm, z / norm);
+		return float3((double)x / (double)norm, (double)y / (double)norm, (double)z / (double)norm);
 	}
 
 	friend float3 operator * (double, const float3);

@@ -12,6 +12,8 @@ public:
 
     Color(double r, double g, double b) : red(r), green(g), blue(b) {}
 
+    Color(std::vector<double> colorVect):red(colorVect[0]),green(colorVect[1]),blue(colorVect[2]){}
+
 
     double getColorR() { return red; };
     double getColorG() { return green; };
@@ -52,6 +54,9 @@ public:
     }
     Color operator*(double aScalar) const {
         return Color(red *aScalar, green * aScalar, blue * aScalar);
+    }
+    Color operator*(Color aColor) const {
+        return Color(red *aColor.getColorR(), green * aColor.getColorG(), blue * aColor.getColorB());
     }
     friend Color operator * (double, const Color);
     
