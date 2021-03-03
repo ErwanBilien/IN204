@@ -67,51 +67,53 @@ public:
     std::vector<Triangle> getListeTriangle(){
     	return listeTriangle;
     }
+    void setListTriangle(std::vector<Triangle> nouvelleListe){
+    	listeTriangle=nouvelleListe;
+    }
 };
 
 //quelques solides standards
+class Tetraedre:public Solide{
+public:
+	Tetraedre(float3 s1, float3 s2,float3 s3,float3 s4,Color couleur,std::vector<double> materiau):Solide(std::vector<Triangle>(),couleur,materiau){
+		
+		this->listeTriangle.push_back(Triangle(s1,s2,s3));
+		this->listeTriangle.push_back(Triangle(s1,s2,s4));
+		this->listeTriangle.push_back(Triangle(s1,s3,s4));
+		this->listeTriangle.push_back(Triangle(s2,s3,s4));
+	}
+};
 
-Solide tetraedre(float3 s1, float3 s2,float3 s3,float3 s4,Color couleur,std::vector<double> materiau){
-	std::vector<Triangle> listeTriangle=std::vector<Triangle>();
-	listeTriangle.push_back(Triangle(s1,s2,s3));
-	listeTriangle.push_back(Triangle(s1,s2,s4));
-	listeTriangle.push_back(Triangle(s1,s3,s4));
-	listeTriangle.push_back(Triangle(s2,s3,s4));
-	Solide tetra=Solide(listeTriangle,couleur,materiau);
-	return tetra;
-}
-
-Solide parallelepipede(float3 s1, float3 arrete1,float3 arrete2,float3 arrete3,Color couleur,std::vector<double> materiau){
-	std::vector<Triangle> listeTriangle=std::vector<Triangle>();
-	float3 s2=s1+arrete1;
-	float3 s3=s1+arrete2;
-	float3 s4=s1+arrete2+arrete1;
-	float3 s5=s1+arrete1+arrete2+arrete3;
-	float3 s6=s1+arrete3+arrete2;
-	float3 s7=s1+arrete3;
-	float3 s8=s1+arrete3+arrete1;
-
-	listeTriangle.push_back(Triangle(s1,s2,s8));
-	listeTriangle.push_back(Triangle(s1,s7,s8));
-
-	listeTriangle.push_back(Triangle(s1,s2,s4));
-	listeTriangle.push_back(Triangle(s1,s2,s3));
-
-	listeTriangle.push_back(Triangle(s3,s4,s5));
-	listeTriangle.push_back(Triangle(s3,s6,s5));
-
-	listeTriangle.push_back(Triangle(s2,s4,s5));
-	listeTriangle.push_back(Triangle(s2,s8,s5));
-
-	listeTriangle.push_back(Triangle(s1,s3,s6));
-	listeTriangle.push_back(Triangle(s1,s7,s6));
+class Parallelepipede:public Solide{
+public:
+	Parallelepipede(float3 s1, float3 arrete1,float3 arrete2,float3 arrete3,Color couleur,std::vector<double> materiau):Solide(std::vector<Triangle>(),couleur,materiau){
 	
-	listeTriangle.push_back(Triangle(s7,s6,s5));
-	listeTriangle.push_back(Triangle(s7,s8,s5));
-	
+		float3 s2=s1+arrete1;
+		float3 s3=s1+arrete2;
+		float3 s4=s1+arrete2+arrete1;
+		float3 s5=s1+arrete1+arrete2+arrete3;
+		float3 s6=s1+arrete3+arrete2;
+		float3 s7=s1+arrete3;
+		float3 s8=s1+arrete3+arrete1;
 
+		this->listeTriangle.push_back(Triangle(s1,s2,s8));
+		this->listeTriangle.push_back(Triangle(s1,s7,s8));
 
-	return Solide(listeTriangle,couleur,materiau);
-}
+		this->listeTriangle.push_back(Triangle(s1,s2,s4));
+		this->listeTriangle.push_back(Triangle(s1,s2,s3));
+
+		this->listeTriangle.push_back(Triangle(s3,s4,s5));
+		this->listeTriangle.push_back(Triangle(s3,s6,s5));
+
+		this->listeTriangle.push_back(Triangle(s2,s4,s5));
+		this->listeTriangle.push_back(Triangle(s2,s8,s5));
+
+		this->listeTriangle.push_back(Triangle(s1,s3,s6));
+		this->listeTriangle.push_back(Triangle(s1,s7,s6));
+		
+		this->listeTriangle.push_back(Triangle(s7,s6,s5));
+		this->listeTriangle.push_back(Triangle(s7,s8,s5));
+	}
+};
 
 #endif

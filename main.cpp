@@ -12,7 +12,7 @@
 
 
 int main() {
-    const int nbPixelLargeur = 1500;
+    const int nbPixelLargeur = 1000;
     const int nbPixelHauteur = 1000;
     double d =1.0; //distance entre la caméra et l'image, d=1 correspond à un angle de vue d'environ 53°
     double largeurImage;
@@ -34,7 +34,7 @@ int main() {
     
     //creation de quelques matériaux par défaut (la couleur n'est pas incluse dans le materiau)
     //std::vector<double> materiau={brillance,reflechissance,transparance,indice de refraction}, reflechissance+transparence<=1.0
-    std::vector<double> verre_1={50,0.1,0.7,1.03};
+    std::vector<double> verre_1={50,0.1,0.8,1.03};
     std::vector<double> metal_1={10,0.4,0,1};
     std::vector<double> plastique_1={1000,0.1,0,1};
     std::vector<double> mirroir={10,0.9,0,1};
@@ -48,6 +48,7 @@ int main() {
     Color blanc(1,1,1);
     Color marron(0.306,0.086,0.035);
     Color orange(1.0,0.65,0.0);
+    Color gris(0.7,0.7,0.7);
 
 
     //Camera pointDeVue=Camera(float3(7,1,2),float3(0,-1.57,0)); 
@@ -61,8 +62,8 @@ int main() {
     int setup=2;
     std::vector<Objet*> listeObjets;
     std::vector<Lumiere*> listeLumiere;
-    /*if(setup==1){
-        Sphere sphere_1=Sphere();
+    
+       /* Sphere sphere_1=Sphere();
         Sphere sphere_2(0.4,float3(1,1.75,-0.5),blanc,verre_1);
         Sphere sphere_3(0.25, float3(0.75,1.75,0.5), Color(0, 1, 0),metal_1);
         Sphere sphere_4(5000,float3(0,-5001,0),jaune,1000,0.5);
@@ -116,31 +117,39 @@ int main() {
         listeLumiere.push_back(&lumiere_4);
         listeLumiere.push_back(&lumiere_5);    
         listeLumiere.push_back(&lumiere_6);
-    }*/
+    */
     //if(setup==2){
         Sphere sphere_1=Sphere();
-        Sphere sphere_2(1,float3(2,1,2),bleu,verre_1);
-        Sphere sphere_3(1, float3(-2,1,2), vert,metal_1);
-        Plan plan_1(float3(1,-1,0),float3(0,-1,0),float3(0,-1,1),blanc,metal_1);
+        Sphere sphere_2(1,float3(2,1,4),bleu,verre_1);
+        Sphere sphere_3(1, float3(-2,1,4), vert,metal_1);
+        Plan plan_1(float3(1,-1,0),float3(0,-1,0),float3(0,-1,1),gris,metal_1);
+        Plan plan_2(float3(-4.0,0,7.0),float3(-1.0,1.0,8.0),float3(-4.0,4.0,7.0),blanc,mirroir);
+        Parallelepipede cube(float3(-1.75,1.5,0.25),float3(0.5,0,0.25),float3(-0.25,0,0.5),float3(0,0.5,0),rose,metal_1);
+
+        Tetraedre tetra_1(float3(3,0,-2),float3(1,0,1),float3(0,1,-1),float3(2,0,0),jaune,plastique_1);
+
         listeObjets.push_back(&sphere_1);
         listeObjets.push_back(&sphere_2);
         listeObjets.push_back(&sphere_3);
         listeObjets.push_back(&plan_1);
+        listeObjets.push_back(&plan_2);
+        listeObjets.push_back(&cube);
+        //listeObjets.push_back(&tetra_1);
 
         LumiereAmbiante lumiere_1(0.05);
         LumierePonctuelle lumiere_2(0.4,float3(0,5,2));
-        LumiereDirectionnelle lumiere_3(0.7,float3(4,4,-4),jaune);
+        LumiereDirectionnelle lumiere_3(0.7,float3(4,4,-4),blanc);
         Spot lumiere_5(0.9,float3(-6,2.5,2),float3(1,-1,0),3.14/6,orange);
-        Spot lumiere_6(0.8,float3(0.5,7,3),float3(0,-1,0),3.14/6,rouge);
+        Spot lumiere_6(0.2,float3(0.5,7,3),float3(0,-1,0),3.14/6,jaune);
         listeLumiere.push_back(&lumiere_1);
         //listeLumiere.push_back(&lumiere_2);
         listeLumiere.push_back(&lumiere_3);
-        //listeLumiere.push_back(&lumiere_6);
+        listeLumiere.push_back(&lumiere_6);
     //}
     std::chrono::time_point<std::chrono::system_clock> start, end1, end2;
     start = std::chrono::system_clock::now();
     Rayon myRay(pointDeVue.getPosition(),float3());
-    #pragma omp parallel for schedule(dynamic )
+    #pragma omp parallel for schedule(dynamic)
     for (int x =-nbPixelLargeur/2;x<nbPixelLargeur/2;x++) { 
         for(int y=-nbPixelHauteur/2;y<nbPixelHauteur/2;y++) {
 

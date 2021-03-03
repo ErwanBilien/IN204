@@ -13,9 +13,10 @@ Color rayTracer(std::vector<Objet*> listeObjets,std::vector<Lumiere*>listeLumier
         float3 vectDir=myRay.getDir();
         float3 PointIntersect=myRay.getOrigin()+dPlusProche*vectDir;
         float3 normale=listeObjets[indexPlusProche]->getNormal(PointIntersect);
+        Color couleurObjet=listeObjets[indexPlusProche]->getColor();
         double intensiteRayon=myRay.getI();        
         if (dot(normale,-vectDir.normalize())<0.00001)normale=-normale;
-        Color couleurLocale= listeObjets[indexPlusProche]->getColor()*CalculLuminosite(listeObjets,listeLumiere,PointIntersect,
+        Color couleurLocale= couleurObjet*CalculLuminosite(listeObjets,listeLumiere,PointIntersect,
             normale,-vectDir,listeObjets[indexPlusProche]->getShine()); //couleur avant la reflection
         
         double reflechissance=listeObjets[indexPlusProche]->getReflechissance();
@@ -61,7 +62,7 @@ Color rayTracer(std::vector<Objet*> listeObjets,std::vector<Lumiere*>listeLumier
                 }
                 else couleurRefractee=Color();
             }
-            return couleurLocale*(1-reflechissance-transparence)+couleurReflechie*reflechissance+couleurRefractee*transparence;
+            return couleurLocale*(1-reflechissance-transparence)+couleurObjet*couleurReflechie*reflechissance+couleurObjet*couleurRefractee*transparence;
         }
         
 
