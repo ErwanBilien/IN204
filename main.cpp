@@ -7,14 +7,25 @@
 #include <iostream>
 #include <vector>
 #include <omp.h>
+#include <ctime>
+#include <chrono>
 
 
 int main() {
-    const int nbPixelLargeur = 500;
-    const int nbPixelHauteur = 500;
+    const int nbPixelLargeur = 1500;
+    const int nbPixelHauteur = 1000;
     double d =1.0; //distance entre la caméra et l'image, d=1 correspond à un angle de vue d'environ 53°
-    double largeurImage = 1.0;
-    double hauteurImage = 1.0;
+    double largeurImage;
+    double hauteurImage ;
+    if (nbPixelLargeur>nbPixelHauteur){
+        largeurImage = 1.0;
+        hauteurImage = (double)nbPixelHauteur/ (double)nbPixelLargeur;
+    }
+    else{
+        largeurImage = (double)nbPixelLargeur/(double)nbPixelHauteur;
+        hauteurImage = 1.0;
+    }
+    
     RGBType* listePixels = (RGBType*)malloc(sizeof(RGBType) * nbPixelHauteur * nbPixelLargeur);
     if (!listePixels) {
         std::cout << "echec" << std::endl;
@@ -118,31 +129,35 @@ int main() {
 
         LumiereAmbiante lumiere_1(0.05);
         LumierePonctuelle lumiere_2(0.4,float3(0,5,2));
-        LumiereDirectionnelle lumiere_3(0.2,float3(4,4,-4));
+        LumiereDirectionnelle lumiere_3(0.7,float3(4,4,-4),jaune);
         Spot lumiere_5(0.9,float3(-6,2.5,2),float3(1,-1,0),3.14/6,orange);
         Spot lumiere_6(0.8,float3(0.5,7,3),float3(0,-1,0),3.14/6,rouge);
         listeLumiere.push_back(&lumiere_1);
         //listeLumiere.push_back(&lumiere_2);
-        //listeLumiere.push_back(&lumiere_3);
-        listeLumiere.push_back(&lumiere_6);
+        listeLumiere.push_back(&lumiere_3);
+        //listeLumiere.push_back(&lumiere_6);
     //}
-
+    std::chrono::time_point<std::chrono::system_clock> start, end1, end2;
+    start = std::chrono::system_clock::now();
     Rayon myRay(pointDeVue.getPosition(),float3());
     #pragma omp parallel for schedule(dynamic )
     for (int x =-nbPixelLargeur/2;x<nbPixelLargeur/2;x++) { 
         for(int y=-nbPixelHauteur/2;y<nbPixelHauteur/2;y++) {
 
-        
             myRay.setDir((pointDeVue.coordPixel(x,y,nbPixelLargeur,nbPixelHauteur,largeurImage,hauteurImage,d)).normalize());//vecteur directeur du rayon
 
             Color couleurPixel = rayTracer(listeObjets,listeLumiere ,myRay,30);
             couleurPixel.check();
-            listePixels[(y+ nbPixelHauteur / 2) * nbPixelHauteur + x+ nbPixelLargeur / 2].r = couleurPixel.getColorR();
-            listePixels[(y + nbPixelHauteur / 2) * nbPixelHauteur + x+nbPixelLargeur / 2].g = couleurPixel.getColorG();
-            listePixels[(y + nbPixelHauteur / 2) * nbPixelHauteur + x+ nbPixelLargeur / 2].b = couleurPixel.getColorB();
+            listePixels[(y+ nbPixelHauteur / 2) * nbPixelLargeur + x+ nbPixelLargeur / 2].r = couleurPixel.getColorR();
+            listePixels[(y + nbPixelHauteur / 2) * nbPixelLargeur + x+nbPixelLargeur / 2].g = couleurPixel.getColorG();
+            listePixels[(y + nbPixelHauteur / 2) * nbPixelLargeur + x+ nbPixelLargeur / 2].b = couleurPixel.getColorB();
         }
     } 
-    
+    end1 = std::chrono::system_clock::now();
+    std::chrono::duration<double> elaps1 = end1 - start;
+    double temps_calcul=elaps1.count();
+    std::cout<<"temps de calcul : "<<temps_calcul<<std::endl;
+
     
     savebmp("raytracing_Image.bmp",nbPixelLargeur, nbPixelHauteur,  72, listePixels);
     free(listePixels);
