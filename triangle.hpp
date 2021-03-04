@@ -38,12 +38,43 @@ class  Solide:public Objet{//solide defini par des triangles
 protected:
 	float3 normale=float3();
 	std::vector<Triangle> listeTriangle;//liste des triangles composant le solide
+
+	//parametre pour une precalculation de l'intersection : si cette option est utilisée, on verifie si le rayn incident intersecte une sphere contenant le solide. Si oui, on determine precisement l'intersection
+	bool preCalcul=false;
+	double rayon=0.0;
+	float3 centre=float3();
+
 public:
 	Solide():listeTriangle(std::vector<Triangle>()),Objet(){}
 	Solide(Color couleur,std::vector<double> materiau):listeTriangle(std::vector<Triangle>()),Objet(couleur,materiau){}
 	Solide(std::vector<Triangle> liste,Color couleur,std::vector<double> materiau):listeTriangle(liste),Objet(couleur,materiau){}//
 		
     double Intersection(Rayon myRay){//calcul l'index et la distance du plus proche objet intersectant le rayon
+    	if(preCalcul){
+    		float3 origine =myRay.getOrigin();
+        	float3 vectDir=myRay.getDir();
+        	float3 CO = origine - centre;
+        	double a = dot(vectDir, vectDir);
+        	double b = 2 * dot(CO, vectDir);
+        	double c = dot(CO, CO)  - rayon * rayon;
+
+	        double delta = b * b - 4 * a * c;
+	        if (delta < 0) {
+	            return -1;
+	        }
+	        double d1 = (-b + sqrt(delta)) / (2 * a);
+	        double d2 = (-b - sqrt(delta)) / (2 * a);
+	        if (d1 < 0 && d2 < 0) {
+	            return -1;
+	        }
+	        if (d1 * d2 <= 0.0001) {
+	            if(std::max(d1, d2)<0.00001)return -1;
+	        }
+	        else {
+	            if(std::min(d1, d2)<0.00001)return -1;
+	        }
+    	}
+
     	int indexPlusProche = -1;
     	double dPlusProche;
     	double d;
@@ -81,6 +112,14 @@ public:
 		this->listeTriangle.push_back(Triangle(s1,s2,s4));
 		this->listeTriangle.push_back(Triangle(s1,s3,s4));
 		this->listeTriangle.push_back(Triangle(s2,s3,s4));
+
+		this->preCalcul=true;
+		this->centre=(s1+s2+s3+s4)/4;
+		this->rayon=(centre-s1).length();
+		this->rayon=std::max(rayon,(centre-s2).length());
+		this->rayon=std::max(rayon,(centre-s3).length());
+		this->rayon=std::max(rayon,(centre-s4).length());
+		this->rayon*=1.1;
 	}
 };
 
@@ -113,6 +152,10 @@ public:
 		
 		this->listeTriangle.push_back(Triangle(s7,s6,s5));
 		this->listeTriangle.push_back(Triangle(s7,s8,s5));
+
+		this->preCalcul=true;
+		this->centre=s1+(arrete3+arrete2+arrete1)/3;
+		this->rayon=0.6*(arrete3+arrete2+arrete1).length();
 	}
 };
 

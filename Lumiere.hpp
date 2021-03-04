@@ -111,12 +111,12 @@ public:
 		if (cosTheta<cos(alpha))return 0;
 		return std::max(intensite*NormaleDotPM/(normale.length()*PM.length()),0.0);
 	}
-	double LuminositeReflexSpeculaire(float3 M,float3 normale,float3 V,double brillance){//luminosité pour la reflexion spéculaire, V=rayon vers le point d'observation
+	double LuminositeReflexSpeculaire(float3 M,float3 normale,float3 vectObservation,double brillance){//luminosité pour la reflexion spéculaire, V=rayon vers le point d'observation
 		float3 PM=position-M;
 		float3 rayonReflechi=2*normale*dot(PM,normale)-PM;
 		double cosTheta=-dot(PM.normalize(),direction.normalize());
 		if (cosTheta<cos(alpha))return 0;
-		if (dot(rayonReflechi,V)>0) return intensite*pow(dot(rayonReflechi,V)/(rayonReflechi.length()*V.length()),brillance);
+		if (dot(rayonReflechi,vectObservation)>0) return intensite*pow(dot(rayonReflechi,vectObservation)/(rayonReflechi.length()*vectObservation.length()),brillance);
 		return 0;
 	}
 
@@ -145,14 +145,14 @@ public:
 		double NormaleDotDir=dot(normale,direction);
 		return std::max(intensite*NormaleDotDir/(normale.length()*direction.length()),0.0);
 	}
-	double LuminositeReflexSpeculaire(float3 M,float3 normale,float3 V,double brillance){//luminosité pour la reflexion spéculaire, V=rayon vers le point d'observation
+	double LuminositeReflexSpeculaire(float3 M,float3 normale,float3 vectObservation,double brillance){//luminosité pour la reflexion spéculaire, vectObservation=direction vers le point d'observation
 		float3 rayonReflechi=2*normale*dot(direction,normale)-direction;
-		if (dot(rayonReflechi,V)>0) return intensite*pow(dot(rayonReflechi,V)/(rayonReflechi.length()*V.length()),brillance);
+		if (dot(rayonReflechi,vectObservation)>0) return intensite*pow(dot(rayonReflechi,vectObservation)/(rayonReflechi.length()*vectObservation.length()),brillance);
 		return 0;
 	}
 };
 
-Color CalculLuminosite(std::vector<Objet*> listeObjets,std::vector<Lumiere*>listeLumiere,float3 M,float3 normale,float3 V,double brillance){
+Color CalculLuminosite(std::vector<Objet*> listeObjets,std::vector<Lumiere*>listeLumiere,float3 M,float3 normale,float3 vectObservation,double brillance){
     std::vector<double> Luminosite={0.0,0.0,0.0};
     for(int i=0;i<listeLumiere.size();i++){
         if (!listeLumiere[i]->Ombre(listeObjets,M)){
@@ -162,9 +162,9 @@ Color CalculLuminosite(std::vector<Objet*> listeObjets,std::vector<Lumiere*>list
             Luminosite[2]+=listeLumiere[i]->LuminositeReflexDiffuse(M,normale)*listeLumiere[i]->getColor().getColorB();
             //relfexion speculaire
             if(brillance>0){
-            	Luminosite[0]+=listeLumiere[i]->LuminositeReflexSpeculaire(M,normale,V,brillance)*listeLumiere[i]->getColor().getColorR();
-            	Luminosite[1]+=listeLumiere[i]->LuminositeReflexSpeculaire(M,normale,V,brillance)*listeLumiere[i]->getColor().getColorG();
-            	Luminosite[2]+=listeLumiere[i]->LuminositeReflexSpeculaire(M,normale,V,brillance)*listeLumiere[i]->getColor().getColorB();
+            	Luminosite[0]+=listeLumiere[i]->LuminositeReflexSpeculaire(M,normale,vectObservation,brillance)*listeLumiere[i]->getColor().getColorR();
+            	Luminosite[1]+=listeLumiere[i]->LuminositeReflexSpeculaire(M,normale,vectObservation,brillance)*listeLumiere[i]->getColor().getColorG();
+            	Luminosite[2]+=listeLumiere[i]->LuminositeReflexSpeculaire(M,normale,vectObservation,brillance)*listeLumiere[i]->getColor().getColorB();
             }
         }
     }
