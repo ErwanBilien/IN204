@@ -26,7 +26,7 @@ https://shilohjames.wordpress.com/2014/04/27/tinyxml2-tutorial/
 
 using namespace tinyxml2;
 
-// the following is a macro to check XML files are loaded successfully
+// the following is a macro to check that XML files are loaded successfully
 #ifndef XMLCheckResult
 #define XMLCheckResult(a_eResult)                                              \
     if (a_eResult != XML_SUCCESS) {                                            \
@@ -61,12 +61,12 @@ double readCameraToPictureDistanceFromXML(const char *scene)
 
 Picture readPictureFromXML(const char *scene)
 {
-    XMLDocument xmlDoc; // loads .xml file into XML document
-    XMLError eResult = xmlDoc.LoadFile(scene); // loads the scene
-    XMLCheckResult(eResult);                   // checks for errors with macro    
-    XMLNode *pRoot = xmlDoc.FirstChild(); // points to the <root> of the .xml file
+    XMLDocument xmlDoc;
+    XMLError eResult = xmlDoc.LoadFile(scene);
+    XMLCheckResult(eResult);
+    XMLNode *pRoot = xmlDoc.FirstChild();
     if (pRoot == nullptr) {
-        XMLCheckResult(XML_ERROR_PARSING_ELEMENT); // checks for errors with macro
+        XMLCheckResult(XML_ERROR_PARSING_ELEMENT);
     }
 
     XMLElement *pPixels = pRoot->FirstChildElement("Width");
@@ -92,12 +92,12 @@ Picture readPictureFromXML(const char *scene)
 
 Camera readCameraFromXML(const char *scene)
 {
-    XMLDocument xmlDoc; // loads .xml file into XML document
-    XMLError eResult = xmlDoc.LoadFile(scene); // loads the scene
-    XMLCheckResult(eResult);                   // checks for errors with macro    
-    XMLNode *pRoot = xmlDoc.FirstChild(); // points to the <root> of the .xml file
+    XMLDocument xmlDoc;
+    XMLError eResult = xmlDoc.LoadFile(scene);
+    XMLCheckResult(eResult); 
+    XMLNode *pRoot = xmlDoc.FirstChild();
     if (pRoot == nullptr) {
-        XMLCheckResult(XML_ERROR_PARSING_ELEMENT); // checks for errors with macro
+        XMLCheckResult(XML_ERROR_PARSING_ELEMENT);
     }
     XMLElement *pCamera = pRoot->FirstChildElement("Camera");
     if (pCamera == nullptr)
@@ -128,12 +128,12 @@ Camera readCameraFromXML(const char *scene)
 
 std::vector<std::shared_ptr<Lumiere>> readLightsFromXML(const char *scene)
 {
-    XMLDocument xmlDoc; // loads .xml file into XML document
-    XMLError eResult = xmlDoc.LoadFile(scene); // loads the scene
-    XMLCheckResult(eResult);                   // checks for errors with macro
-    XMLNode *pRoot = xmlDoc.FirstChild(); // points to the <root> of the .xml file
+    XMLDocument xmlDoc;
+    XMLError eResult = xmlDoc.LoadFile(scene);
+    XMLCheckResult(eResult);
+    XMLNode *pRoot = xmlDoc.FirstChild();
     if (pRoot == nullptr) {
-        XMLCheckResult(XML_ERROR_PARSING_ELEMENT); // checks for errors with macro
+        XMLCheckResult(XML_ERROR_PARSING_ELEMENT);
     }
 
     // ----- C O L O R S -----------------------------------------------------------------------
@@ -161,10 +161,10 @@ std::vector<std::shared_ptr<Lumiere>> readLightsFromXML(const char *scene)
         while (pListElement != nullptr)
         {
             szAttributeText = pListElement->Attribute("colorName");
-            /*if (szAttributeText == nullptr) {
-                std::cout << "unable to read material name" << std::endl;
+            if (szAttributeText == nullptr) {
+                std::cout << "unable to read color name in scene.hpp in lights section" << std::endl;
                 exit(EXIT_FAILURE);
-            }*/
+            }
             strOutColorName = szAttributeText;
             mapOfColors[strOutColorName] = count;
             count+=1;
@@ -218,7 +218,7 @@ std::vector<std::shared_ptr<Lumiere>> readLightsFromXML(const char *scene)
 
         LightsList.push_back(light);
 
-        pListElement = pListElement->NextSiblingElement("AmbiantLight"); // jump to next
+        pListElement = pListElement->NextSiblingElement("AmbiantLight"); // jump to next AmbiantLight
     }
     
     XMLNode *pLightPunctual = pLights->FirstChildElement("Punctual");
@@ -243,11 +243,11 @@ std::vector<std::shared_ptr<Lumiere>> readLightsFromXML(const char *scene)
             float3(dOutXCentre, dOutYCentre, dOutZCentre),
             Color(ColorList[ mapOfColors[ strOutColor ] ]->getColorR(),
                   ColorList[ mapOfColors[ strOutColor ] ]->getColorG(),
-                  ColorList[ mapOfColors[ strOutColor ] ]->getColorB() ))); // creates a light
+                  ColorList[ mapOfColors[ strOutColor ] ]->getColorB() )));
 
         LightsList.push_back(light);
 
-        pListElement = pListElement->NextSiblingElement("PunctualLight"); // jump to next
+        pListElement = pListElement->NextSiblingElement("PunctualLight");
     }
 
     XMLNode *pLightDirectional = pLights->FirstChildElement("Directional");
@@ -272,11 +272,11 @@ std::vector<std::shared_ptr<Lumiere>> readLightsFromXML(const char *scene)
             float3(dOutTheta, dOutPhi, dOutPsi),
             Color(ColorList[ mapOfColors[ strOutColor ] ]->getColorR(),
                   ColorList[ mapOfColors[ strOutColor ] ]->getColorG(),
-                  ColorList[ mapOfColors[ strOutColor ] ]->getColorB() ))); // creates a light
+                  ColorList[ mapOfColors[ strOutColor ] ]->getColorB() )));
 
         LightsList.push_back(light);
 
-        pListElement = pListElement->NextSiblingElement("DirectionalLight"); // jump to next
+        pListElement = pListElement->NextSiblingElement("DirectionalLight");
     }
 
     XMLNode *pLightSpot = pLights->FirstChildElement("SpotLights");
@@ -313,11 +313,11 @@ std::vector<std::shared_ptr<Lumiere>> readLightsFromXML(const char *scene)
             dOutSpotAngle,
             Color(ColorList[ mapOfColors[ strOutColor ] ]->getColorR(),
                   ColorList[ mapOfColors[ strOutColor ] ]->getColorG(),
-                  ColorList[ mapOfColors[ strOutColor ] ]->getColorB() ))); // creates a light
+                  ColorList[ mapOfColors[ strOutColor ] ]->getColorB() )));
 
         LightsList.push_back(light);
 
-        pListElement = pListElement->NextSiblingElement("SpotLight"); // jump to next
+        pListElement = pListElement->NextSiblingElement("SpotLight");
     }
 
     return LightsList;
@@ -331,18 +331,18 @@ std::vector<std::shared_ptr<Objet>> readObjectsFromXML(const char *scene)
 {
     std::vector<std::shared_ptr<Objet>> ObjectList;
 
-    XMLDocument xmlDoc; // loads .xml file into XML document
-    XMLError eResult = xmlDoc.LoadFile(scene); // loads the scene
-    XMLCheckResult(eResult);                   // checks for errors with macro
+    XMLDocument xmlDoc;
+    XMLError eResult = xmlDoc.LoadFile(scene);
+    XMLCheckResult(eResult);
 
-    XMLNode *pRoot = xmlDoc.FirstChild(); // points to the <root> of the .xml file
+    XMLNode *pRoot = xmlDoc.FirstChild();
     if (pRoot == nullptr) {
-        XMLCheckResult(XML_ERROR_PARSING_ELEMENT); // checks for errors with macro
+        XMLCheckResult(XML_ERROR_PARSING_ELEMENT);
     }
 
     // ----- M A T E R I A L S -----------------------------------------------------------------------
     
-    std::map<std::string, int> mapOfMaterials; // index of materials (serves the same purpose as an ENUM)        
+    std::map<std::string, int> mapOfMaterials; // index of materials (a map serves the same purpose as an ENUM but it's dynamic)        
     std::vector<std::shared_ptr<Material>> MaterialList;
 
     XMLElement *pMaterial = pRoot->FirstChildElement("Materials"); // goes down from <root> to <Materials>
@@ -365,13 +365,13 @@ std::vector<std::shared_ptr<Objet>> readObjectsFromXML(const char *scene)
         while (pListElement != nullptr)
         {
             szAttributeText = pListElement->Attribute("materialName");
-            /*if (szAttributeText == nullptr) {
-                std::cout << "unable to read material name" << std::endl;
+            if (szAttributeText == nullptr) {
+                std::cout << "unable to read material name in scene.hpp, material declaration" << std::endl;
                 exit(EXIT_FAILURE);
-            }*/
+            }
             strOutMatName = szAttributeText;
-            mapOfMaterials[strOutMatName] = count;
-            count+=1; // check whether mapOfMaterials[sMaterialName] = count++; works
+            mapOfMaterials[strOutMatName] = count++;
+            //count+=1;
             eResult = pListElement->QueryDoubleAttribute("brightness", &dOutBright);
             XMLCheckResult(eResult);
             assert(dOutBright >= 0);
@@ -390,7 +390,7 @@ std::vector<std::shared_ptr<Objet>> readObjectsFromXML(const char *scene)
 
             auto material = std::shared_ptr<Material>(new Material(strOutMatName, dOutBright, dOutReflect, dOutTranspa, dOutRefract )); // creates a material
             MaterialList.push_back(material);
-            pListElement = pListElement->NextSiblingElement("Material"); // jump to next
+            pListElement = pListElement->NextSiblingElement("Material");
         }
     }
 
@@ -419,10 +419,10 @@ std::vector<std::shared_ptr<Objet>> readObjectsFromXML(const char *scene)
         while (pListElement != nullptr)
         {
             szAttributeText = pListElement->Attribute("colorName");
-            /*if (szAttributeText == nullptr) {
-                std::cout << "unable to read material name" << std::endl;
+            if (szAttributeText == nullptr) {
+                std::cout << "unable to read color name in scene.hpp, materials section" << std::endl;
                 exit(EXIT_FAILURE);
-            }*/
+            }
             strOutColorName = szAttributeText;
             mapOfColors[strOutColorName] = count;
             count+=1;
@@ -477,11 +477,15 @@ std::vector<std::shared_ptr<Objet>> readObjectsFromXML(const char *scene)
             charOutMaterial = pListElement->Attribute("material"); // cont char *
             strOutMaterial = charOutMaterial; // cast
 
-            /*if (strOutMaterial == nullptr) {
-                std::cout << "unable to read material name in object description" << std::endl;
+            if (strOutMaterial == nullptr) {
+                std::cout << "unable to read material name in scene.hpp in sphere section" << std::endl;
                 exit(EXIT_FAILURE);
-            }*/
-            //auto material = std::shared_ptr<Material>(new MaterialList[ mapOfMaterials[ strOutMaterial ] ] );
+            }
+            if (strOutColor == nullptr) {
+                std::cout << "unable to read color name in scene.hpp, sphere section" << std::endl;
+                exit(EXIT_FAILURE);
+            }
+            
             auto sphere = std::shared_ptr<Objet>   (new Sphere(dOutRayon_s,float3(dOutXCentre, dOutYCentre, dOutZCentre),
                 Color(ColorList[ mapOfColors[ strOutColor ] ]->getColorR(),
                 	  ColorList[ mapOfColors[ strOutColor ] ]->getColorG(),
@@ -489,11 +493,11 @@ std::vector<std::shared_ptr<Objet>> readObjectsFromXML(const char *scene)
                 MaterialList[ mapOfMaterials[ strOutMaterial ] ]->getBrightness(),
                 MaterialList[ mapOfMaterials[ strOutMaterial ] ]->getReflectivity(),
                 MaterialList[ mapOfMaterials[ strOutMaterial ] ]->getTransparency(),
-                MaterialList[ mapOfMaterials[ strOutMaterial ] ]->getRefraction())); // creates a sphere
+                MaterialList[ mapOfMaterials[ strOutMaterial ] ]->getRefraction()));
 
-            ObjectList.push_back(sphere); // sphere ???
+            ObjectList.push_back(sphere);
 
-            pListElement = pListElement->NextSiblingElement("Sphere"); // jump to next
+            pListElement = pListElement->NextSiblingElement("Sphere");
         }
     }
 
@@ -528,15 +532,19 @@ std::vector<std::shared_ptr<Objet>> readObjectsFromXML(const char *scene)
             eResult = pListElement->QueryDoubleAttribute("cZ", &dOutCZ);
             XMLCheckResult(eResult);
             
-            charOutColor = pListElement->Attribute("color"); // cont char *
-            strOutColor = charOutColor; // cast
-            charOutMaterial = pListElement->Attribute("material"); // cont char *
-            strOutMaterial = charOutMaterial; // cast
+            charOutColor = pListElement->Attribute("color");
+            strOutColor = charOutColor;
+            charOutMaterial = pListElement->Attribute("material");
+            strOutMaterial = charOutMaterial;
 
-            /*if (strOutMaterial == nullptr) {
-                std::cout << "unable to read material name in object description" << std::endl;
+            if (strOutMaterial == nullptr) {
+                std::cout << "unable to read material name in scene.hpp, plan section" << std::endl;
                 exit(EXIT_FAILURE);
-            }*/
+            }
+            if (strOutMaterial == nullptr) {
+                std::cout << "unable to read color name in scene.hpp, plan section" << std::endl;
+                exit(EXIT_FAILURE);
+            }
 
             auto plan = std::shared_ptr<Objet>   (new Plan(
                 float3(dOutAX, dOutAY, dOutAZ),
@@ -593,18 +601,19 @@ std::vector<std::shared_ptr<Objet>> readObjectsFromXML(const char *scene)
             eResult = pListElement->QueryDoubleAttribute("dZ", &dOutDZ);
             XMLCheckResult(eResult);
             
-            charOutColor = pListElement->Attribute("color"); // cont char *
-            strOutColor = charOutColor; // cast
-            charOutMaterial = pListElement->Attribute("material"); // cont char *
-            strOutMaterial = charOutMaterial; // cast
+            charOutColor = pListElement->Attribute("color");
+            strOutColor = charOutColor;
+            charOutMaterial = pListElement->Attribute("material");
+            strOutMaterial = charOutMaterial;
 
-            /*if (strOutMaterial == nullptr) {
-                std::cout << "unable to read material name in object description" << std::endl;
+            if (strOutMaterial == nullptr) {
+                std::cout << "unable to read material name in scene.hpp in terahedron section" << std::endl;
                 exit(EXIT_FAILURE);
-            }*/
-
-            // essayer auto solide = std::shared::ptr<Objet> (new Solide())
-            // solide = tetrahedre; éventuellement avec cast ? ou modification du type edans triangele
+            }
+            if (strOutColor == nullptr) {
+                std::cout << "unable to read color name in scene.hpp, terahedron section" << std::endl;
+                exit(EXIT_FAILURE);
+            }
 
             auto tetra = std::shared_ptr<Objet> ( new Tetraedre(
                 float3(dOutAX, dOutAY, dOutAZ),
@@ -667,13 +676,14 @@ std::vector<std::shared_ptr<Objet>> readObjectsFromXML(const char *scene)
             charOutMaterial = pListElement->Attribute("material"); // cont char *
             strOutMaterial = charOutMaterial; // cast
 
-            /*if (strOutMaterial == nullptr) {
-                std::cout << "unable to read material name in object description" << std::endl;
+            if (strOutMaterial == nullptr) {
+                std::cout << "unable to read material name in scene.hpp in parallelepiped section" << std::endl;
                 exit(EXIT_FAILURE);
-            }*/
-            
-            // essayer auto solide = std::shared::ptr<Objet> (new Solide())
-            // solide = tetrahedre; éventuellement avec cast ? ou modification du type edans triangele
+            }
+            if (strOutColor == nullptr) {
+                std::cout << "unable to read color name in scene.hpp, parallelepiped section" << std::endl;
+                exit(EXIT_FAILURE);
+            }
 
             auto para = std::shared_ptr<Objet> (new Parallelepipede(
                 float3(dOutAX, dOutAY, dOutAZ),
@@ -703,7 +713,8 @@ std::vector<std::shared_ptr<Objet>> readObjectsFromXML(const char *scene)
     while (pListSolidElement != nullptr)
     { // loop on the solids
         pListElement = pListSolidElement->FirstChildElement("Triangle");
-        if (pListElement != nullptr) {
+        if (pListElement != nullptr)
+        {
             double dOutAX, dOutAY, dOutAZ, dOutBX, dOutBY, dOutBZ, dOutCX, dOutCY, dOutCZ;
             const char * charOutMaterial;
             const char * charOutColor;
@@ -729,15 +740,19 @@ std::vector<std::shared_ptr<Objet>> readObjectsFromXML(const char *scene)
                 eResult = pListElement->QueryDoubleAttribute("cZ", &dOutCZ);
                 XMLCheckResult(eResult);
                 
-                charOutColor = pListElement->Attribute("color"); // cont char *
-                strOutColor = charOutColor; // cast
-                charOutMaterial = pListElement->Attribute("material"); // cont char *
-                strOutMaterial = charOutMaterial; // cast
+                charOutColor = pListElement->Attribute("color");
+                strOutColor = charOutColor;
+                charOutMaterial = pListElement->Attribute("material");
+                strOutMaterial = charOutMaterial;
 
-                /*if (strOutMaterial == nullptr) {
-                    std::cout << "unable to read material name in object description" << std::endl;
+                if (strOutMaterial == nullptr) {
+                    std::cout << "unable to read material name in scene.hpp in solids section" << std::endl;
                     exit(EXIT_FAILURE);
-                }*/
+                }
+                if (strOutColor == nullptr) {
+                    std::cout << "unable to read color name in scene.hpp, solids section" << std::endl;
+                    exit(EXIT_FAILURE);
+                }
 
                 auto triangle = std::shared_ptr<Triangle> (new Triangle(
                     float3(dOutAX, dOutAY, dOutAZ),
@@ -763,7 +778,7 @@ std::vector<std::shared_ptr<Objet>> readObjectsFromXML(const char *scene)
 
             pListSolidElement = pListSolidElement->NextSiblingElement("Solid");
 
-        } else XMLCheckResult(XML_ERROR_PARSING_ELEMENT); // we won't allow a solid without a normal
+        }
     }
 
     return ObjectList;
