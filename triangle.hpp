@@ -51,7 +51,7 @@ public:
 	//Solide(Color couleur,std::vector<double> materiau) : listeTriangle(std::vector<Triangle>()),Objet(couleur,materiau){}
 	//Solide(std::vector<Triangle> liste,Color couleur,std::vector<double> materiau) : listeTriangle(liste),Objet(couleur,materiau){}
 	Solide(std::vector<std::shared_ptr<Triangle>> liste, Color couleur, double brille, double reflech, double transpa, double indiceRefraction) :
-		listeTriangle(std::vector<std::shared_ptr<Triangle>>()), Objet(couleur,brille,reflech,transpa,indiceRefraction) {}
+		listeTriangle(liste), Objet(couleur,brille,reflech,transpa,indiceRefraction) {}
 		
     double Intersection(Rayon myRay){//calcul l'index et la distance du plus proche objet intersectant le rayon
     	if(preCalcul){

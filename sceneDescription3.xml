@@ -1,6 +1,6 @@
 <Root>
-	<Width>500</Width>
-	<Height>500</Height>
+	<Width>1000</Width>
+	<Height>1000</Height>
 	<PictureToCameraDistance>1.0</PictureToCameraDistance>
 
 	<Camera xCentre="0" yCentre="4" zCentre="-6" theta="0.52" phi="0" psi="0"/>
@@ -22,7 +22,7 @@
 	</Lights>
 
 	<Materials>
-		<Material materialName="GLASS"   brightness="50"   reflectivity="0.1"  transparency="0.7" refraction="0.2"/>
+		<Material materialName="GLASS"   brightness="50"   reflectivity="0.1"  transparency="0.7" refraction="1.03"/>
 		<Material materialName="METAL"   brightness="10"   reflectivity="0.4"  transparency="0"   refraction="1"/>
 		<Material materialName="PLASTIC" brightness="1000" reflectivity="0.05" transparency="0"   refraction="1"/>
 		<Material materialName="MIRROR"  brightness="10"   reflectivity="0.9" transparency="0"   refraction="1"/>
@@ -45,7 +45,7 @@
 
 		<Spheres>
 			<Sphere Rayon_S="0.4"    xCentre="1"  yCentre="1.75"     zCentre="-0.5" color="GREEN"     material="GLASS"/>
-			<Sphere Rayon_S="0.25"    xCentre="0.75"  yCentre="1.75"     zCentre="0.5" color="VERT"    material="METAL"/>
+			<Sphere Rayon_S="0.25"    xCentre="0.75"  yCentre="1.75"     zCentre="0.5" color="GREEN"    material="METAL"/>
 			
 		</Spheres>
 
