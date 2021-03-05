@@ -147,9 +147,9 @@ public:
 		double NormaleDotDir=dot(normale,direction);
 		return std::max(intensite*NormaleDotDir/(normale.length()*direction.length()),0.0);
 	}
-	double LuminositeReflexSpeculaire(float3 M,float3 normale,float3 V,double brillance){//luminosité pour la reflexion spéculaire, V=rayon vers le point d'observation
+	double LuminositeReflexSpeculaire(float3 M,float3 normale,float3 vectObservation,double brillance){//luminosité pour la reflexion spéculaire, vectObservation=direction vers le point d'observation
 		float3 rayonReflechi=2*normale*dot(direction,normale)-direction;
-		if (dot(rayonReflechi,V)>0) return intensite*pow(dot(rayonReflechi,V)/(rayonReflechi.length()*V.length()),brillance);
+		if (dot(rayonReflechi,vectObservation)>0) return intensite*pow(dot(rayonReflechi,vectObservation)/(rayonReflechi.length()*vectObservation.length()),brillance);
 		return 0;
 	}
 };
