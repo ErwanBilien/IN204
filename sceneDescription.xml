@@ -13,10 +13,10 @@
 			<PunctualLight intensity="0.6" xCentre="2" yCentre="1" zCentre="0" color="WHITE"/>
 		</Punctual>
 		<Directional>
-			<DirectionalLight intensity="0.2" theta="1" phi="4" psi="4" color="WHITE"/>
+			<DirectionalLight intensity="0.2" xDirection="1" yDirection="4" zDirection="4" color="WHITE"/>
 		</Directional>
 		<SpotLights>
-			<SpotLight intensity="0.2" xCentre="3" yCentre="3" zCentre="3" theta="1" phi="4" psi="4" angle="0.2" color="WHITE"/>
+			<SpotLight intensity="0.2" xCentre="3" yCentre="3" zCentre="3" xDirection="1" yDirection="4" zDirection="4" angle="0.2" color="WHITE"/>
 		</SpotLights>
 	</Lights>
 
