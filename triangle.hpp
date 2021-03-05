@@ -2,6 +2,7 @@
 #define TRIANGLE
 #include "objet.hpp"
 
+//Chaque facette du solide est decrite par un triangle
 class Triangle{
 protected:
 	float3 sommet1;//sommets du triangle
@@ -35,12 +36,12 @@ public:
 	}
 };
 
-class  Solide:public Objet{//solide defini par des triangles
+class  Solide:public Objet{//solide defini par des facettes triangulaire
 protected:
-	float3 normale=float3();
+	float3 normale=float3();// la normale est mise à jour pendant le calcul de l'intersection 
 	std::vector<std::shared_ptr<Triangle>> listeTriangle;//liste des triangles composant le solide
 
-	//parametre pour une precalculation de l'intersection : si cette option est utilisée, on verifie si le rayn incident intersecte une sphere contenant le solide. Si oui, on determine precisement l'intersection
+	//parametre pour une precalculation de l'intersection : si cette option est utilisée, on verifie si le rayn incident intersecte une sphere contenant le solide. Si oui, on determine precisement l'intersection en testant chasue facette
 	bool preCalcul=false;
 	double rayon=0.0;
 	float3 centre=float3();
@@ -109,23 +110,6 @@ public:
 //quelques solides standards
 class Tetraedre:public Solide{
 public:
-	/*Tetraedre(float3 s1,float3 s2,float3 s3,float3 s4, Color couleur, std::vector<double> materiau):
-		Solide(std::vector<Triangle>(), couleur, materiau) {
-		
-		this->listeTriangle.push_back(Triangle(s1,s2,s3));
-		this->listeTriangle.push_back(Triangle(s1,s2,s4));
-		this->listeTriangle.push_back(Triangle(s1,s3,s4));
-		this->listeTriangle.push_back(Triangle(s2,s3,s4));
-
-		this->preCalcul=true;
-		this->centre=(s1+s2+s3+s4)/4;
-		this->rayon=(centre-s1).length();
-		this->rayon=std::max(rayon,(centre-s2).length());
-		this->rayon=std::max(rayon,(centre-s3).length());
-		this->rayon=std::max(rayon,(centre-s4).length());
-		this->rayon*=1.1;
-	}*/
-
 	Tetraedre(float3 s1,float3 s2,float3 s3,float3 s4, Color couleur, double brille,double reflech,double transpa,double indiceRefraction):
 		Solide(std::vector<std::shared_ptr<Triangle>>(),couleur, brille, reflech, transpa, indiceRefraction) {
 		
@@ -152,39 +136,6 @@ public:
 
 class Parallelepipede:public Solide{
 public:
-	/*Parallelepipede(float3 s1, float3 arrete1,float3 arrete2,float3 arrete3,Color couleur,std::vector<double> materiau) :
-		Solide(std::vector<Triangle>(), couleur, materiau){
-	
-		float3 s2=s1+arrete1;
-		float3 s3=s1+arrete2;
-		float3 s4=s1+arrete2+arrete1;
-		float3 s5=s1+arrete1+arrete2+arrete3;
-		float3 s6=s1+arrete3+arrete2;
-		float3 s7=s1+arrete3;
-		float3 s8=s1+arrete3+arrete1;
-
-		this->listeTriangle.push_back(Triangle(s1,s2,s8));
-		this->listeTriangle.push_back(Triangle(s1,s7,s8));
-
-		this->listeTriangle.push_back(Triangle(s1,s2,s4));
-		this->listeTriangle.push_back(Triangle(s1,s2,s3));
-
-		this->listeTriangle.push_back(Triangle(s3,s4,s5));
-		this->listeTriangle.push_back(Triangle(s3,s6,s5));
-
-		this->listeTriangle.push_back(Triangle(s2,s4,s5));
-		this->listeTriangle.push_back(Triangle(s2,s8,s5));
-
-		this->listeTriangle.push_back(Triangle(s1,s3,s6));
-		this->listeTriangle.push_back(Triangle(s1,s7,s6));
-		
-		this->listeTriangle.push_back(Triangle(s7,s6,s5));
-		this->listeTriangle.push_back(Triangle(s7,s8,s5));
-
-		this->preCalcul=true;
-		this->centre=s1+(arrete3+arrete2+arrete1)/3;
-		this->rayon=0.6*(arrete3+arrete2+arrete1).length();
-	}*/
 
 	Parallelepipede(float3 s1,float3 arrete1,float3 arrete2,float3 arrete3, Color couleur, double brille,double reflech,double transpa,double indiceRefraction) :
 		Solide(std::vector<std::shared_ptr<Triangle>>(), couleur, brille, reflech, transpa, indiceRefraction) {
