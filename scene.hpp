@@ -263,7 +263,7 @@ std::vector<std::shared_ptr<Lumiere>> readLightsFromXML(const char *scene)
         XMLCheckResult(eResult);
         strOutColor = charOutColor;
 
-        auto light = std::shared_ptr<Lumiere> (new LumierePonctuelle(
+        auto light = std::shared_ptr<Lumiere> (new LumiereDirectionnelle(
             dOutIntensity,
             float3(dOutXDir, dOutYDir, dOutZDir),
             Color(ColorList[ mapOfColors[ strOutColor ] ]->getColorR(),
