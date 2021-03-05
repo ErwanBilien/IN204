@@ -266,7 +266,6 @@ std::vector<std::shared_ptr<Lumiere>> readLightsFromXML(const char *scene)
         auto light = std::shared_ptr<Lumiere> (new LumiereDirectionnelle(dOutIntensity,float3(dOutXDir, dOutYDir, dOutZDir),Color(ColorList[ mapOfColors[ strOutColor ] ]->getColorR(),ColorList[ mapOfColors[ strOutColor ] ]->getColorG(),ColorList[ mapOfColors[ strOutColor ] ]->getColorB() )));
 
         LightsList.push_back(light);
-        std::cout << "1" << std::endl;
 
         pListElement = pListElement->NextSiblingElement("DirectionalLight");
     }

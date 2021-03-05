@@ -13,7 +13,7 @@
 			
 		</Punctual>
 		<Directional>
-			<DirectionalLight intensity="0." xDirection="4" yDirection="4" zDirection="-4" color="WHITE"/>
+			<DirectionalLight intensity="0.7" xDirection="4" yDirection="4" zDirection="-4" color="WHITE"/>
 		</Directional>
 		<SpotLights>
 			<SpotLight intensity="0.2" xCentre="0.5" yCentre="7" zCentre="3" xDirection="0" yDirection="-1" zDirection="0" angle="0.52" color="YELLOW"/>

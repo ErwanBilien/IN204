@@ -1,3 +1,4 @@
 #!/bin/bash
-g++ -fopenmp main.cpp
+g++ -fopenmp main.cpp tinyxml2.cpp
+
 ./a.out

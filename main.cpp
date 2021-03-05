@@ -12,7 +12,7 @@
 #include <ctime>
 #include <chrono>
 
-char pathToScene[] = "sceneDescription3.xml";
+char pathToScene[] = "sceneDescription2.xml";
 
 int main( int argc, char *argv[] )
 {
