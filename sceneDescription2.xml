@@ -10,7 +10,7 @@
 			<AmbiantLight intensity="0.05" color="WHITE"/>
 		</Ambiant>
 		<Punctual>
-			
+			<PunctualLight intensity="0.6" xCentre="2" yCentre="1" zCentre="0" color="WHITE"/>
 		</Punctual>
 		<Directional>
 			<DirectionalLight intensity="0.7" xDirection="4" yDirection="4" zDirection="-4" color="WHITE"/>
