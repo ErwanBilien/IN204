@@ -1,8 +1,8 @@
 #ifndef LUMIERE
 #define LUMIERE
 #include "objet.hpp"
-//#include "fonctionRayTracer.hpp"
 #include <cmath>
+//classe parente de tous les type de lumiere
 class Lumiere{
 protected:
 	double 	intensite;
@@ -14,6 +14,7 @@ public:
 	double getI(){
 		return intensite;
 	}
+	//renvoie true si un objet se situe entre le point M et la source de lumiere
 	virtual bool Ombre(std::vector<std::shared_ptr<Objet>> listeObjets,float3 M){
 		return false;
 	}
@@ -27,7 +28,7 @@ public:
 		return couleurLumiere;
 	}
 };
-
+//lumiere s'appliquant à tous les points : permet de discerner des objets non éclairés
 class LumiereAmbiante:public Lumiere{
 public:
 	LumiereAmbiante(double I): Lumiere(I){}
@@ -46,7 +47,7 @@ public:
 		return 0;
 	}
 };
-
+//un point emettant de la lumiere
 class LumierePonctuelle:public Lumiere{
 protected:
 	float3 position;
@@ -81,8 +82,9 @@ public:
 
 };
 
+//lumiere ponctuelle emmettant dans un cone d angle 2*alpha
 class Spot:public Lumiere
-{//lumiere ponctuelle emmettant dans un cone d angle 2*alpha
+{
 protected:
 	float3 position;
 	float3 direction;
@@ -122,6 +124,7 @@ public:
 
 };
 
+//lumiere provenant de l'infini, avec des rayons lumineux paralleles à la direction de la lumiere
 class LumiereDirectionnelle:public Lumiere{
 protected:
 	float3 direction;
@@ -150,6 +153,8 @@ public:
 		return 0;
 	}
 };
+
+//Retourne la luminosité en un point pour chaque couleur primaire
 
 Color CalculLuminosite(
 	std::vector<std::shared_ptr<Objet>> listeObjets,
