@@ -1,7 +1,9 @@
-#ifndef SPHERE
+#ifndef  SPHERE
 #define  SPHERE
 #include "objet.hpp"
+#include "material.hpp"
 #include <cmath>
+
 class Sphere : public Objet {
 protected:
     double rayon;
@@ -9,8 +11,9 @@ protected:
 public:
     Sphere() : rayon(1), centre(float3(0, -1, 3)), Objet(Color(1, 0, 0),500,0.2,0) {}
     Sphere(double Rayon_S, float3 Centre,Color couleur,double brille,double reflech) :rayon(Rayon_S), centre(Centre), Objet(couleur,brille,reflech,0) {}
-    Sphere(double Rayon_S, float3 Centre,Color couleur,double brille,double reflech,double transpa,double indiceRefraction) :rayon(Rayon_S), centre(Centre), Objet(couleur,brille,reflech,transpa,indiceRefraction) {}
-    Sphere(double Rayon_S, float3 Centre,Color couleur,std::vector<double> materiau) :rayon(Rayon_S), centre(Centre), Objet(couleur,materiau) {}
+    Sphere(double Rayon_S, float3 Centre,Color couleur,double brille,double reflech,double transpa,double indiceRefraction) :
+        rayon(Rayon_S), centre(Centre), Objet(couleur, brille, reflech, transpa, indiceRefraction) {}
+    //Sphere(double Rayon_S, float3 Centre,Color couleur,std::shared_ptr<Material> materiau) :rayon(Rayon_S), centre(Centre), Objet(couleur,materiau) {}
 
     double Intersection(Rayon myRay) {
         float3 origine =myRay.getOrigin();

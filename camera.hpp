@@ -8,6 +8,7 @@ protected:
 public:
 	Camera():position(float3()),rotation(float3()){}
 	Camera(float3 coord,float3 rot):position(coord),rotation(rot){}
+	
 	float3 coordPixel(int i,int j,int nbPixelLargeur,int nbPixelHauteur,double largeurImage,double hauteurImage,double distance){//vecteur directeur du rayon passant par le pixel(i,j)
 		float3 vectDir=float3(i * largeurImage / (double)nbPixelLargeur, j * hauteurImage / (double)nbPixelHauteur, distance);
 		double x=vectDir.getX();

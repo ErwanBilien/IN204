@@ -2,6 +2,8 @@
 #define OBJET
 #include "color.hpp"
 #include "rayon.hpp"
+#include "material.hpp"
+#include <memory>
 class Objet {
 protected:
 	Color couleurObjet;
@@ -11,12 +13,14 @@ protected:
 	double indiceRefraction;
 
 public:
-	Objet() :couleurObjet(Color()),brillance(0),reflechissance(0),transparence(0),indiceRefraction(1.5){}
-	Objet(Color aColor) :couleurObjet(aColor),brillance(0),reflechissance(0),transparence(0),indiceRefraction(1.5){}
-	Objet(Color aColor,double brille,double reflech,double transpa) :couleurObjet(aColor),brillance(brille),reflechissance(reflech),transparence(transpa),indiceRefraction(1.5){}
-	Objet(Color aColor,double brille,double reflech,double transpa,double indice) :couleurObjet(aColor),brillance(brille),reflechissance(reflech),transparence(transpa),indiceRefraction(indice){}
-	Objet(Color aColor,std::vector<double> materiau) :couleurObjet(aColor),brillance(materiau[0]),reflechissance(materiau[1]),transparence(materiau[2]),indiceRefraction(materiau[3]){}
-	virtual double Intersection(Rayon MyRay) {
+	Objet() :couleurObjet(Color()),brillance(0),reflechissance(0),transparence(0),indiceRefraction(1.5) {}
+	Objet(Color aColor) :couleurObjet(aColor),brillance(0),reflechissance(0),transparence(0),indiceRefraction(1.5) {}
+	Objet(Color aColor,double brille,double reflech,double transpa) :
+        couleurObjet(aColor),brillance(brille),reflechissance(reflech),transparence(transpa),indiceRefraction(1.5) {}
+	Objet(Color aColor,double brille,double reflech,double transpa,double indice) :
+        couleurObjet(aColor),brillance(brille),reflechissance(reflech),transparence(transpa),indiceRefraction(indice) {}
+
+    virtual double Intersection(Rayon MyRay) {
 		return 0;
 	}
 	Color getColor() {
@@ -40,7 +44,9 @@ public:
     }
 };
 
-void CalculIntersection(std::vector<Objet*> listeObjets,Rayon myRay,int* indexPlusProche,double* dPlusProche){//calcul l'index et la distance du plus proche objet intersectant le rayon
+void CalculIntersection(std::vector<std::shared_ptr<Objet>> listeObjets, Rayon myRay, int* indexPlusProche, double* dPlusProche)
+{
+    //calcul l'index et la distance du plus proche objet intersectant le rayon
     *indexPlusProche = -1;
     double d;
     for (int i = 0; i < (int)listeObjets.size(); i++) {

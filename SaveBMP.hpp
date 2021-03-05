@@ -23,7 +23,7 @@ struct RGBType {
 //Takes a filename
 // Ints for width, height, dpi of the image
 //A data set which holds the colours of each pixel in the image
-auto savebmp(const char* filename, int w, int h, int dpi, RGBType* data) {
+void savebmp(const char* filename, int w, int h, int dpi, RGBType* data) {
 	FILE* f;
 	int k = w * h;
 	int s = 4 * k;
@@ -73,7 +73,7 @@ auto savebmp(const char* filename, int w, int h, int dpi, RGBType* data) {
 	f = fopen(filename, "wb");
 	if (!f) {
 		std::cout << "ouverture echec" << std::endl;
-		return 0;
+		exit(EXIT_FAILURE);
 	}
 
 	//Write the file header info
