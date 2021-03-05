@@ -22,7 +22,7 @@ int main( int argc, char *argv[] )
     const int nbPixelLargeur = picture.getWidth();
     const int nbPixelHauteur = picture.getHeight();
 
-    double d =1.0; //distance entre la caméra et l'image, d=1 correspond à un angle de vue d'environ 53°
+    double d = readCameraToPictureDistanceFromXML(pathToScene); //distance entre la caméra et l'image, d=1 correspond à un angle de vue d'environ 53°
     double largeurImage;
     double hauteurImage ;
     if (nbPixelLargeur>nbPixelHauteur){

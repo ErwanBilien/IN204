@@ -39,6 +39,26 @@ using namespace tinyxml2;
 //----- P I C T U R E   ------------------------------------------------------
 //----------------------------------------------------------------------------
 
+double readCameraToPictureDistanceFromXML(const char *scene)
+{
+    XMLDocument xmlDoc; // loads .xml file into XML document
+    XMLError eResult = xmlDoc.LoadFile(scene); // loads the scene
+    XMLCheckResult(eResult);                   // checks for errors with macro    
+    XMLNode *pRoot = xmlDoc.FirstChild(); // points to the <root> of the .xml file
+    if (pRoot == nullptr) {
+        XMLCheckResult(XML_ERROR_PARSING_ELEMENT); // checks for errors with macro
+    }
+
+    XMLElement *pPicCamDistance = pRoot->FirstChildElement("PictureToCameraDistance");
+    if (pPicCamDistance == nullptr)
+        XMLCheckResult(XML_ERROR_PARSING_ELEMENT);
+    double dOutDistance;
+    eResult = pPicCamDistance->QueryDoubleText(&dOutDistance);
+    XMLCheckResult(eResult);
+
+    return dOutDistance;
+}
+
 Picture readPictureFromXML(const char *scene)
 {
     XMLDocument xmlDoc; // loads .xml file into XML document

@@ -1,6 +1,7 @@
 <Root>
 	<Width>500</Width>
 	<Height>500</Height>
+	<PictureToCameraDistance>1.0</PictureToCameraDistance>
 
 	<Camera xCentre="7" yCentre="1" zCentre="2" theta="1" phi="-1" psi="-1"/>
 
