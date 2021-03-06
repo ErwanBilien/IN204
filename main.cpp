@@ -65,7 +65,7 @@ int main( int argc, char *argv[] )
 
             myRay.setDir((pointDeVue.coordPixel(x,y,nbPixelLargeur,nbPixelHauteur,largeurImage,hauteurImage,d)).normalize());//vecteur directeur du rayon
 
-            Color couleurPixel = rayTracer(listeObjets,listeLumiere ,myRay,30);
+            Color couleurPixel = rayTracer(listeObjets,listeLumiere ,myRay,40);
             couleurPixel.check();
             listePixels[(y+ nbPixelHauteur / 2) * nbPixelLargeur + x+ nbPixelLargeur / 2].r = couleurPixel.getColorR();
             listePixels[(y + nbPixelHauteur / 2) * nbPixelLargeur + x+nbPixelLargeur / 2].g = couleurPixel.getColorG();

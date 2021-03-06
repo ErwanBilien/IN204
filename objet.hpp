@@ -4,11 +4,11 @@
 #include "rayon.hpp"
 #include "material.hpp"
 #include <memory>
-class Objet {//classe parente de tout les objets
+class Objet {//classe parente de tous les objets
 protected:
 	Color couleurObjet;
 	double brillance;
-	double reflechissance; //0: ne reflechie pas; 1: l'objet est un mirroir parfait
+	double reflechissance; //0: ne reflechit pas; 1: l'objet est un mirroir parfait
 	double transparence; //0: opaque, 1: transparent attention : transparence+brillance<=1
 	double indiceRefraction;//indice optique
 
