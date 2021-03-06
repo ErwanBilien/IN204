@@ -4,8 +4,6 @@
 #include "sphere.hpp"
 #include "plan.hpp"
 #include "scene.hpp"
-#include "triangle.hpp"
-#include "image.hpp"
 #include <iostream>
 #include <vector>
 #include <omp.h>

@@ -19,7 +19,7 @@ Voyons en détail les balises devant figurer dans votre XML et comment les compl
 
 1. **La balise `<Root>`**
 
-Elle ne doit pas être ommise.
+Elle ne doit pas être omise.
 
 2. **Les balises `<Width>`, `<Height>` et `<PictureToCameraDistance>`**
 
@@ -55,7 +55,8 @@ Exemple :
 4. **La balise `<Lights>`**
 
 Cette balise doit figurer ainsi que toutes ses balises filles.
-Toutes les lumières possèdent une intensité lumineuse (flottant compris entre 0 et 1) ainsi qu'une couleur. 
+Toutes les lumières possèdent une intensité lumineuse (flottant compris entre 0 et 1) ainsi qu'une couleur.
+
 **Les lumières ambiantes** : ces lumières s'appliquent à tous les objets indépendamment de leur géométrie et de leur position. Elles permettent de discerner un objet non éclairé. 
 Exemple :
 
@@ -158,4 +159,4 @@ Pour utiliser le moteur de rendu, clonez la branche de rendu
 Executez le binaire avec en argument le nom de votre fichier de description de scène et le nom que vous souhaitez donner à votre image .L'exemple suivant charge le fichier de description de scène "sceneDescription3.xml" et enregistre le rendu sous le nom "scene_3"
 
     ./raytracer sceneDescription3.xml scene_3
-Si aucun nom d'image n'est fourni, votre rendu se nommera par défaut"raytracing_Image.bmp"
+Si aucun nom d'image n'est fourni, votre rendu se nommera par défaut "raytracing_Image.bmp"

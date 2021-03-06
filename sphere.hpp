@@ -1,7 +1,6 @@
 #ifndef  SPHERE
 #define  SPHERE
 #include "objet.hpp"
-#include "material.hpp"
 #include <cmath>
 
 class Sphere : public Objet {

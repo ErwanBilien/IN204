@@ -4,13 +4,6 @@
 #include <string>
 #include <map>
 #include <string>
-#include "Lumiere.hpp"
-#include "SaveBMP.hpp"
-#include "color.hpp"
-#include "float3.hpp"
-#include "fonctionRayTracer.hpp"
-#include "sphere.hpp"
-#include "material.hpp"
 #include "triangle.hpp"
 #include "image.hpp"
 #include "tinyxml2.h"
