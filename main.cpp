@@ -16,10 +16,14 @@
 
 int main( int argc, char *argv[] )
 {
-    if(argc!=2){
-        std::cout<<"invlaide argument";
+    char* nomFichierSauvegerde="raytracing_Image.bmp";
+    if(argc!=2&&argc!=3){
+        std::cout<<"invalide argument";
     }
     char *pathToScene= argv[1];
+    if (argc==3){
+        nomFichierSauvegerde=argv[2];
+    }
     std::cout << "loading" << std::endl; 
 
     Picture picture = readPictureFromXML(pathToScene);
@@ -74,6 +78,6 @@ int main( int argc, char *argv[] )
     std::cout<<"temps de calcul : "<<temps_calcul<<std::endl;
 
     
-    savebmp("raytracing_Image.bmp",nbPixelLargeur, nbPixelHauteur,  72, listePixels);
+    savebmp(nomFichierSauvegerde,nbPixelLargeur, nbPixelHauteur,  72, listePixels);
     free(listePixels);
 }

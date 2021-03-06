@@ -53,7 +53,7 @@ public:
 	Solide(std::vector<std::shared_ptr<Triangle>> liste, Color couleur, double brille, double reflech, double transpa, double indiceRefraction) :
 		listeTriangle(liste), Objet(couleur,brille,reflech,transpa,indiceRefraction) {}
 		
-    double Intersection(Rayon myRay){//calcul l'index et la distance du plus proche objet intersectant le rayon
+    double Intersection(Rayon myRay){//calcule l'index et la distance du plus proche objet intersectant le rayon
     	if(preCalcul){
     		float3 origine =myRay.getOrigin();
         	float3 vectDir=myRay.getDir();

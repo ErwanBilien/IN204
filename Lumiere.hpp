@@ -73,7 +73,7 @@ public:
 		double NormaleDotPM=dot(normale,PM);
 		return std::max(intensite*NormaleDotPM/(normale.length()*PM.length()),0.0);
 	}
-	double LuminositeReflexSpeculaire(float3 M,float3 normale,float3 V,double brillance){//luminosité pour la reflexion spéculaire, V=rayon vers le point d'observation
+	double LuminositeReflexSpeculaire(float3 M,float3 normale,float3 V,double brillance){//luminosité pour la reflexion spéculaire, vectObservation=rayon vers le point d'observation
 		float3 PM=position-M;
 		float3 rayonReflechi=2*normale*dot(PM,normale)-PM;
 		if (dot(rayonReflechi,V)>0) return intensite*pow(dot(rayonReflechi,V)/(rayonReflechi.length()*V.length()),brillance);
@@ -113,7 +113,7 @@ public:
 		if (cosTheta<cos(alpha))return 0;
 		return std::max(intensite*NormaleDotPM/(normale.length()*PM.length()),0.0);
 	}
-	double LuminositeReflexSpeculaire(float3 M,float3 normale,float3 vectObservation,double brillance){//luminosité pour la reflexion spéculaire, V=rayon vers le point d'observation
+	double LuminositeReflexSpeculaire(float3 M,float3 normale,float3 vectObservation,double brillance){//luminosité pour la reflexion spéculaire, vectObservation=rayon vers le point d'observation
 		float3 PM=position-M;
 		float3 rayonReflechi=2*normale*dot(PM,normale)-PM;
 		double cosTheta=-dot(PM.normalize(),direction.normalize());

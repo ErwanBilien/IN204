@@ -37,14 +37,14 @@ Color rayTracer(
             return couleurLocale;
         }
         else{
-            //Calcule de la contribution du rayon réfléchi
+            //Calcul de la contribution du rayon réfléchi
             Color couleurReflechie=Color();
                 if(reflechissance>0.0){
                     float3 reflecDir=2 * normale * dot(normale,-vectDir) + vectDir;
                     Rayon rayonReflechi(PointIntersect,reflecDir,myRay.getIndex(),reflechissance*intensiteRayon);
                     couleurReflechie=rayTracer(listeObjets,listeLumiere,rayonReflechi,profondeurMax-1);
             }
-            //Calcule de la contrbuion du rayon réfracté
+            //Calcul de la contribuion du rayon réfracté
             Color couleurRefractee=Color();
             if(transparence>0.0){
                 //indices refraction

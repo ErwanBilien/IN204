@@ -8,8 +8,8 @@ class Objet {//classe parente de tout les objets
 protected:
 	Color couleurObjet;
 	double brillance;
-	double reflechissance; //0 ne reflechie pas; 1 l'objet est un mirroir parfait
-	double transparence; //0 opaque, 1 transparent attention : transparence+brillance<=1
+	double reflechissance; //0: ne reflechie pas; 1: l'objet est un mirroir parfait
+	double transparence; //0: opaque, 1: transparent attention : transparence+brillance<=1
 	double indiceRefraction;//indice optique
 
 public:
@@ -44,7 +44,7 @@ public:
     }
 };
 
-    //calcul l'index et la distance du plus proche objet intersectant le rayon
+    //calcule l'index et la distance du plus proche objet intersectant le rayon
 void CalculIntersection(std::vector<std::shared_ptr<Objet>> listeObjets, Rayon myRay, int* indexPlusProche, double* dPlusProche)
 {
     *indexPlusProche = -1;
