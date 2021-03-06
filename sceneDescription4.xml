@@ -13,16 +13,18 @@
 			
 		</Punctual>
 		<Directional>
-			<DirectionalLight intensity="0.7" xDirection="4" yDirection="4" zDirection="-4" color="WHITE"/>
+			
 		</Directional>
 		<SpotLights>
-			<SpotLight intensity="0.3" xCentre="0.5" yCentre="7" zCentre="3" xDirection="0" yDirection="-1" zDirection="0" angle="0.52" color="WHITE"/>
+			<SpotLight intensity="0.8" xCentre="0" yCentre="7" zCentre="3" xDirection="0" yDirection="-1" zDirection="0" angle="0.52" color="WHITE"/>
 		</SpotLights>
 	</Lights>
 
 	<Materials>
 		<Material materialName="GLASS"   brightness="50"   reflectivity="0.1"  transparency="0.8" refraction="1.03"/>
 		<Material materialName="METAL"   brightness="10"   reflectivity="0.4"  transparency="0"   refraction="1"/>
+		<Material materialName="METAL_2"   brightness="100"   reflectivity="0.6"  transparency="0"   refraction="1"/>
+		<Material materialName="METAL_3"   brightness="100"   reflectivity="0.8"  transparency="0"   refraction="1"/>
 		<Material materialName="PLASTIC" brightness="1000" reflectivity="0.1" transparency="0"   refraction="1"/>
 		<Material materialName="MIRROR"  brightness="10"   reflectivity="0.9" transparency="0"   refraction="1"/>
 	</Materials>
@@ -42,9 +44,10 @@
 	<Objects>
 
 		<Spheres>
-			<Sphere Rayon_S="1"    xCentre="0"  yCentre="-1"     zCentre="3" color="RED"     material="PLASTIC"/>
+			<Sphere Rayon_S="1"    xCentre="-3"  yCentre="0"     zCentre="4" color="RED"     material="METAL"/>
+			<Sphere Rayon_S="1"    xCentre="0" yCentre="0"     zCentre="4" color="GREEN"   material="METAL_2"/>
+			<Sphere Rayon_S="1"    xCentre="3"  yCentre="0"     zCentre="4" color="BLUE"    material="METAL_3"/>
 			
-			<Sphere Rayon_S="1"    xCentre="-2" yCentre="0"     zCentre="4" color="GREEN"   material="PLASTIC"/>
 			
 		</Spheres>
 
@@ -54,7 +57,7 @@
 		</Plans>
 
 		<Tetrahedrons>
-			<Tetrahedron aX="1"  aY="2" aZ="-2" bX="-1"  bY="2" bZ="1" cX="-2" cY="2" cZ="-1" dX="-2" dY="2" dZ="0" color="YELLOW" material="GLASS"/>
+			
 		</Tetrahedrons>
 		<Parallelepipeds>
 		</Parallelepipeds>

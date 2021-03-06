@@ -1,6 +1,6 @@
 <Root>
-	<Width>1000</Width>
-	<Height>1000</Height>
+	<Width>500</Width>
+	<Height>500</Height>
 	<PictureToCameraDistance>1.0</PictureToCameraDistance>
 
 	<Camera xCentre="0" yCentre="4" zCentre="-6" theta="0.52" phi="0" psi="0"/>
@@ -61,7 +61,7 @@
 			<Parallelepiped aX="-2"  aY="-1" aZ="0" bX="1"  bY="0" bZ="0" cX="0" cY="0" cZ="1" dX="0"  dY="2" dZ="0" color="BROWN" material="PLASTIC"/>
 			<Parallelepiped aX="1"  aY="-1" aZ="0" bX="1"  bY="0" bZ="0" cX="0" cY="0" cZ="1" dX="0"  dY="2" dZ="0" color="BROWN" material="PLASTIC"/>
 			<Parallelepiped aX="-2"  aY="1" aZ="-0.5" bX="4"  bY="0" bZ="0" cX="0" cY="0" cZ="2" dX="0"  dY="0.5" dZ="0" color="BROWN" material="PLASTIC"/>
-			<Parallelepiped aX="-1.75"  aY="1.5" aZ="0.25" bX="0.5"  bY="0" bZ="0.25" cX="-0.25" cY="0" cZ="0.5" dX="0"  dY="0.5" dZ="0" color="PURPLE" material="METAL"/>
+			<Parallelepiped aX="-1.75"  aY="1.5" aZ="0.25" bX="0.5"  bY="0" bZ="0.25" cX="-0.25" cY="0" cZ="0.5" dX="0.4"  dY="0.5" dZ="-0.1" color="PURPLE" material="METAL"/>
 
 		</Parallelepipeds>
 

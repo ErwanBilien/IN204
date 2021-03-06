@@ -12,10 +12,14 @@
 #include <ctime>
 #include <chrono>
 
-char pathToScene[] = "sceneDescription3.xml";
+
 
 int main( int argc, char *argv[] )
 {
+    if(argc!=2){
+        std::cout<<"invlaide argument";
+    }
+    char *pathToScene= argv[1];
     std::cout << "loading" << std::endl; 
 
     Picture picture = readPictureFromXML(pathToScene);
